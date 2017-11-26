@@ -1,5 +1,7 @@
 # Kcu
 
+[![Build Status](https://travis-ci.org/bloom-solutions/kcu.svg?branch=master)](https://travis-ci.org/bloom-solutions/kcu)
+
 Kubectl Utils: convenience scripts for kubectl for an opinionated Kubernetes setup
 
 ## Installation
