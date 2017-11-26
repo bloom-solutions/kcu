@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - Get a single secret's decoded value
+- Set a single secret's value, given a non-encoded value (yes, we properly encode for you!)
 
 ## [0.1.0] - 2017-11-26
 ### Added

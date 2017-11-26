@@ -26,6 +26,14 @@ module Kcu
         end
       end
 
+      command :"secret set" do |c|
+        c.syntax = "secret set namespace/secret_name entry_name value"
+        c.description = "Set an entry in a secret by giving a non-base64 encoded value"
+        c.action do |args, options|
+          SetSecretAction.(*args)
+        end
+      end
+
       run!
     end
 
