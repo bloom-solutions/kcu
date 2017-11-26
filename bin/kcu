@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+require "fileutils"
+require "pathname"
+
+BIN_DIR = Pathname.new(File.dirname(__FILE__))
+LIB_DIR = File.expand_path(BIN_DIR.join("..", "lib"))
+$: << LIB_DIR
+
+require 'kcu'
+
+Kcu::Client.new.run if $0 == __FILE__
