@@ -14,11 +14,19 @@ gem install kcu
 
 ## Usage
 
-All actions are documented in the executable:
+All actions are documented in the executable. Use `--help`:
 
 ```
 kcu --help
 kcu secret list --help
+```
+
+Some examples:
+
+```
+kcu secret list production/worker
+kcu secret get production/worker sidekiq_concurrency
+kcu secret set production/worker sidekiq_concurrency 10
 ```
 
 ## Development
