@@ -6,14 +6,23 @@ module Kcu
 
       let(:entry_value) { "Some string" }
       let(:encoded_entry_value) { Base64.strict_encode64(entry_value) }
+      let(:expected_json) do
+        {
+          data: {
+            "mysecret" => encoded_entry_value,
+          },
+        }.to_json
+      end
 
       it "encodes entry_value to encoded_entry_value as Base64 (strict)" do
-        resulting_ctx = described_class.execute({
+        expect(Open3).to receive(:capture3).
+          with(%Q(kubectl patch secret worker --namespace=prod --patch='#{expected_json}'))
+        described_class.execute({
           resource_namespace: "prod",
           resource_name: "worker",
+          entry_name: "mysecret",
           encoded_entry_value: encoded_entry_value,
         })
-        expect(resulting_ctx.encoded_entry_value).to eq expected_value
       end
 
     end
