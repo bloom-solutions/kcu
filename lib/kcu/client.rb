@@ -18,6 +18,14 @@ module Kcu
         end
       end
 
+      command :"secret get" do |c|
+        c.syntax = "secret get namespace/secret_name entry_name"
+        c.description = "Return decoded value of specified secret"
+        c.action do |args, options|
+          GetSecretAction.(*args)
+        end
+      end
+
       run!
     end
 
