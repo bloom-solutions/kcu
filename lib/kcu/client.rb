@@ -5,7 +5,7 @@ module Kcu
 
     include Commander::Methods
 
-    def run
+    def run(working_dir:)
       program :name, "Kubectl Utils (KCU)"
       program :version, Kcu::VERSION
       program :description, Kcu::SUMMARY
@@ -39,6 +39,14 @@ module Kcu
         c.description = "Restarts a deployment"
         c.action do |args, options|
           RestartDeploymentAction.(*args)
+        end
+      end
+
+      command :deploy do |c|
+        c.syntax = "deploy master"
+        c.description = "Deploy a branch"
+        c.action do |args, options|
+          DeployAction.(*args.insert(0, working_dir))
         end
       end
 

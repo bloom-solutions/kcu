@@ -1,0 +1,17 @@
+deploys:
+  - branch: master
+    namespace: production
+    template: "gcr.io/bloom-solutions/website:prod-$GIT_COMMIT"
+    targets:
+      - deployment_name: web
+        container: website
+      - deployment_name: worker
+        container: sidekiq
+  - branch: /staging_(\d+)/
+    namespace: staging
+    template: "gcr.io/bloom-solutions/website:staging-$GIT_COMMIT"
+    targets:
+      - deployment_name: web
+        container: website
+      - deployment_name: worker
+        container: sidekiq
