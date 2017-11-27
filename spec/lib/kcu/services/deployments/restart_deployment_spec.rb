@@ -13,9 +13,14 @@ module Kcu
       it "restarts the deployment by setting an annotation" do
         Timecop.freeze
 
-        expect(Open3).to receive(:capture3).
-          with(%Q(kubectl patch deployment web --namespace=prod --patch='#{json}')).
-          and_return([nil, nil, 0])
+        expect(ExecShell).to receive(:call).with(
+          "kubectl",
+          "patch",
+          "deployment",
+          "web",
+          "--namespace" => "prod",
+          "--patch" => "'#{json}'",
+        ).and_return([nil, nil, 0])
 
         described_class.execute(resource_namespace: "prod", resource_name: "web")
       end

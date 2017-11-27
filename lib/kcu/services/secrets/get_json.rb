@@ -7,16 +7,14 @@ module Kcu
       promises :secret_json
 
       executed do |c|
-        shell_command = [
+        stdout_str, stderr_str, status = ExecShell.(
           "kubectl",
           "get",
           "secret",
           c.resource_name,
-          "--namespace=#{c.resource_namespace}",
-          "--output=json",
-        ].join(" ")
-
-        stdout_str, stderr_str, status = Open3.capture3(shell_command)
+          "--namespace" => c.resource_namespace,
+          "--output" => "json",
+        )
 
         c.secret_json = JSON.parse(stdout_str)
       end

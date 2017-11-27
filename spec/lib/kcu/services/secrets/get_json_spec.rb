@@ -9,9 +9,14 @@ module Kcu
       end
 
       it "sets the json file of the resource" do
-        expect(Open3).to receive(:capture3).
-          with("kubectl get secret web --namespace=default --output=json").
-          and_return([expected_json, nil, 0])
+        expect(ExecShell).to receive(:call).with(
+          "kubectl",
+          "get",
+          "secret",
+          "web",
+          "--namespace" => "default",
+          "--output" => "json",
+        ).and_return([expected_json, nil, 0])
 
         resulting_ctx = described_class.execute(
           resource_name: "web",
