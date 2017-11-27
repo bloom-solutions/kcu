@@ -10,6 +10,7 @@ end
 
 require "kcu/version"
 require "kcu/summary"
+require "kcu/services/exec_shell"
 require "kcu/services/get_resource_namespace_and_name"
 require "kcu/services/secrets/get_json"
 require "kcu/services/secrets/decode_data"

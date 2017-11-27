@@ -16,16 +16,15 @@ module Kcu
             c.entry_name => c.encoded_entry_value,
           },
         }.to_json
-        shell_command = [
+
+        stdout_str, stderr_str, status = ExecShell.(
           "kubectl",
           "patch",
           "secret",
           c.resource_name,
-          "--namespace=#{c.resource_namespace}",
-          ["--patch", "'#{patch_json}'"].join("="),
-        ].join(" ")
-
-        stdout_str, stderr_str, status = Open3.capture3(shell_command)
+          "--namespace" => c.resource_namespace,
+          "--patch" => "'#{patch_json}'",
+        )
 
         puts stdout_str
       end

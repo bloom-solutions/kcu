@@ -15,8 +15,15 @@ module Kcu
       end
 
       it "encodes entry_value to encoded_entry_value as Base64 (strict)" do
-        expect(Open3).to receive(:capture3).
-          with(%Q(kubectl patch secret worker --namespace=prod --patch='#{expected_json}'))
+        expect(ExecShell).to receive(:call).with(
+          "kubectl",
+          "patch",
+          "secret",
+          "worker",
+          "--namespace" => "prod",
+          "--patch" => "'#{expected_json}'"
+        )
+
         described_class.execute({
           resource_namespace: "prod",
           resource_name: "worker",

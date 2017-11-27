@@ -10,16 +10,14 @@ module Kcu
           kcu_restarted_at: Time.now.to_i.to_s,
         } } } } }.to_json
 
-        shell_command = [
+        stdout_str, stderr_str, status = ExecShell.(
           "kubectl",
           "patch",
           "deployment",
           c.resource_name,
-          "--namespace=#{c.resource_namespace}",
-          ["--patch", "'#{json}'"].join("=")
-        ].join(" ")
-
-        stdout_str, stderr_str, status = Open3.capture3(shell_command)
+          "--namespace" => c.resource_namespace,
+          "--patch" => "'#{json}'",
+        )
 
         puts stdout_str
       end
