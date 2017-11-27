@@ -16,10 +16,11 @@ require "kcu/services/secrets/decode_data"
 require "kcu/services/secrets/get_entry_value"
 require "kcu/services/secrets/encode_entry_value"
 require "kcu/services/secrets/set_entry_value"
-require "kcu/services/secrets/get_entry_value"
+require "kcu/services/deployments/restart_deployment"
 require "kcu/actions/list_secret_action"
 require "kcu/actions/get_secret_action"
 require "kcu/actions/set_secret_action"
+require "kcu/actions/restart_deployment_action"
 require "kcu/client"
 
 Kcu.new.run if $0 == __FILE__
