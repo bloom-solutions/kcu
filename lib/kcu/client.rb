@@ -34,6 +34,14 @@ module Kcu
         end
       end
 
+      command :"deployment restart" do |c|
+        c.syntax = "deployment restart namespace/deployment_name"
+        c.description = "Restarts a deployment"
+        c.action do |args, options|
+          RestartDeploymentAction.(*args)
+        end
+      end
+
       run!
     end
 
