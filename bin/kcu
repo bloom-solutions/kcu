@@ -8,4 +8,4 @@ $: << LIB_DIR
 
 require 'kcu'
 
-Kcu::Client.new.run if $0 == __FILE__
+Kcu::Client.new.run(working_dir: FileUtils.pwd)

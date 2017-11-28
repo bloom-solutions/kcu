@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
+- Add easy deployment
 - Restart a deployment
 
 ## [0.2.0] -2017-11-26
