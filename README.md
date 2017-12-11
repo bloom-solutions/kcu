@@ -27,7 +27,7 @@ Some examples:
 kcu secret list production/worker
 kcu secret get production/worker sidekiq_concurrency
 kcu secret set production/worker sidekiq_concurrency 10
-kcu controller restart production/website
+kcu deployment restart production/website
 ```
 
 ### Easy Deployment
