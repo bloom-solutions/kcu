@@ -7,6 +7,7 @@ module Kcu
       let(:expected_json) do
         File.read(SPEC_DIR.join("fixtures", "secret-encoded.json"))
       end
+      let(:status) { instance_double(Process::Status, exitstatus: 0) }
 
       it "sets the json file of the resource" do
         expect(ExecShell).to receive(:call).with(
@@ -16,7 +17,7 @@ module Kcu
           "web",
           "--namespace" => "default",
           "--output" => "json",
-        ).and_return([expected_json, nil, 0])
+        ).and_return([expected_json, nil, status])
 
         resulting_ctx = described_class.execute(
           resource_name: "web",
