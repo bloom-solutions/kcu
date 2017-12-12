@@ -16,6 +16,10 @@ module Kcu
           "--output" => "json",
         )
 
+        unless status.exitstatus.zero?
+          fail stderr_str
+        end
+
         c.secret_json = JSON.parse(stdout_str)
       end
 
