@@ -23,7 +23,7 @@ module Kcu
         git_repo.add(all: true)
         git_repo.commit("Second commit")
 
-        git_repo.branch("staging_11")
+        git_repo.branch("staging_11").checkout
 
         FileUtils.touch(git_repo_path.join("hello3.txt"))
         git_repo.add(all: true)
@@ -37,7 +37,7 @@ module Kcu
           repo_dir: git_repo_path,
         )
         test_repo = Git.open(git_repo_path)
-        test_repo.branch("staging_11")
+        test_repo.branch("staging_11").checkout
         expect(resulting_ctx.image_name).
           to eq "gcr.io/bloom-solutions/website:staging-#{test_repo.log(1).first.sha}"
 
@@ -47,7 +47,7 @@ module Kcu
           repo_dir: git_repo_path,
         )
         test_repo = Git.open(git_repo_path)
-        test_repo.branch("master")
+        test_repo.branch("master").checkout
         expect(resulting_ctx.image_name).
           to eq "gcr.io/bloom-solutions/website:prod-#{test_repo.log(1).first.sha}"
       end
