@@ -8,7 +8,7 @@ module Kcu
 
       executed do |c|
         git = Git.open(c.repo_dir)
-        git.branch(c.git_branch)
+        git.branch(c.git_branch).checkout
         git_commit = git.log(1).first.sha
 
         c.image_name = c.image_config["template"].
