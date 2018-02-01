@@ -13,12 +13,10 @@ module Kcu
           },
         }.to_json
       end
-      let(:successful_status) do
-        instance_double(Process::Status, exitstatus: 0)
-      end
 
       context "successfully updates entry" do
-        it "encodes entry_value to encoded_entry_value as Base64 (strict)" do
+        let(:status) { instance_double(Process::Status, exitstatus: 0) }
+        it "encodes entry_value to encoded_entry_value as Base64 (strict) and skips_remaining" do
           expect(ExecShell).to receive(:call).with(
             "kubectl",
             "patch",
@@ -26,7 +24,7 @@ module Kcu
             "worker",
             "--namespace" => "prod",
             "--patch" => "'#{expected_json}'"
-          ).and_return(["stdout", "stderr", successful_status])
+          ).and_return(["stdout", "stderr", status])
 
           ctx = described_class.execute({
             resource_namespace: "prod",
@@ -36,6 +34,29 @@ module Kcu
           })
 
           expect(ctx).to be_skip_remaining
+        end
+      end
+
+      context "unsuccessfully updates entry" do
+        let(:status) { instance_double(Process::Status, exitstatus: 1) }
+        it "does not skip remaining" do
+          expect(ExecShell).to receive(:call).with(
+            "kubectl",
+            "patch",
+            "secret",
+            "worker",
+            "--namespace" => "prod",
+            "--patch" => "'#{expected_json}'"
+          ).and_return(["stdout", "stderr", status])
+
+          ctx = described_class.execute({
+            resource_namespace: "prod",
+            resource_name: "worker",
+            entry_name: "mysecret",
+            encoded_entry_value: encoded_entry_value,
+          })
+
+          expect(ctx).to_not be_skip_remaining
         end
       end
 

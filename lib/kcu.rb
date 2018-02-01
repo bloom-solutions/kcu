@@ -8,6 +8,7 @@ require "json"
 require "light-service"
 require "open3"
 require "to_regexp"
+require "shellwords"
 
 module Kcu
 end
@@ -22,6 +23,7 @@ require "kcu/services/secrets/decode_data"
 require "kcu/services/secrets/get_entry_value"
 require "kcu/services/secrets/encode_entry_value"
 require "kcu/services/secrets/set_entry_value"
+require "kcu/services/secrets/create_entry_value"
 require "kcu/services/deployments/restart_deployment"
 require "kcu/services/deploys/get_config"
 require "kcu/services/deploys/set_target_namespace"

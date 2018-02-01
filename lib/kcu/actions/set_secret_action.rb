@@ -12,6 +12,7 @@ module Kcu
         GetResourceNamespaceAndName,
         Secrets::EncodeEntryValue,
         Secrets::SetEntryValue,
+        Secrets::CreateEntryValue,
       )
     end
 

@@ -1,32 +1,32 @@
 module Kcu
   module Secrets
-    class SetEntryValue
+    class CreateEntryValue
 
       extend LightService::Action
       expects(
         :resource_namespace,
         :resource_name,
         :entry_name,
-        :encoded_entry_value,
+        :entry_value,
       )
 
       executed do |c|
-        patch_json = {
-          data: {
-            c.entry_name => c.encoded_entry_value,
-          },
-        }.to_json
+        literal = [
+          c.entry_name,
+          Shellwords.escape(c.entry_value)
+        ].join("=")
 
         stdout_str, stderr_str, status = ExecShell.(
           "kubectl",
-          "patch",
+          "create",
           "secret",
+          "generic",
           c.resource_name,
           "--namespace" => c.resource_namespace,
-          "--patch" => "'#{patch_json}'",
+          "--from-literal" => literal,
         )
 
-        c.skip_remaining! if status.exitstatus.zero?
+        puts stdout_str || stderr_str
       end
 
     end
