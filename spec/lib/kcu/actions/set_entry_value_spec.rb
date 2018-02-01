@@ -13,23 +13,30 @@ module Kcu
           },
         }.to_json
       end
+      let(:successful_status) do
+        instance_double(Process::Status, exitstatus: 0)
+      end
 
-      it "encodes entry_value to encoded_entry_value as Base64 (strict)" do
-        expect(ExecShell).to receive(:call).with(
-          "kubectl",
-          "patch",
-          "secret",
-          "worker",
-          "--namespace" => "prod",
-          "--patch" => "'#{expected_json}'"
-        )
+      context "successfully updates entry" do
+        it "encodes entry_value to encoded_entry_value as Base64 (strict)" do
+          expect(ExecShell).to receive(:call).with(
+            "kubectl",
+            "patch",
+            "secret",
+            "worker",
+            "--namespace" => "prod",
+            "--patch" => "'#{expected_json}'"
+          ).and_return(["stdout", "stderr", successful_status])
 
-        described_class.execute({
-          resource_namespace: "prod",
-          resource_name: "worker",
-          entry_name: "mysecret",
-          encoded_entry_value: encoded_entry_value,
-        })
+          ctx = described_class.execute({
+            resource_namespace: "prod",
+            resource_name: "worker",
+            entry_name: "mysecret",
+            encoded_entry_value: encoded_entry_value,
+          })
+
+          expect(ctx).to be_skip_remaining
+        end
       end
 
     end

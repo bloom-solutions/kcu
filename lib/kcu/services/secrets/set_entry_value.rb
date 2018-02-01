@@ -26,7 +26,7 @@ module Kcu
           "--patch" => "'#{patch_json}'",
         )
 
-        puts stdout_str
+        c.skip_remaining!
       end
 
     end
