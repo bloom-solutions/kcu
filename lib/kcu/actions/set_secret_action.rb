@@ -3,13 +3,15 @@ module Kcu
 
     extend LightService::Organizer
 
-    def self.call(resource, entry_name, entry_value)
+    def self.call(args, options)
       ctx = with({
-        resource: resource,
-        entry_name: entry_name,
-        entry_value: entry_value,
+        resource: args[0],
+        entry_name: args[1],
+        entry_value: args[2],
+        options: options,
       }).reduce(
         GetResourceNamespaceAndName,
+        Secrets::ReadEntryValue,
         Secrets::EncodeEntryValue,
         Secrets::SetEntryValue,
         Secrets::CreateEntryValue,

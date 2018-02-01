@@ -27,10 +27,11 @@ module Kcu
       end
 
       command :"secret set" do |c|
-        c.syntax = "secret set namespace/secret_name entry_name value"
+        c.syntax = "secret set namespace/secret_name entry_name [value or --from-file=/path]"
         c.description = "Set an entry in a secret by giving a non-base64 encoded value"
+        c.option "--from-file String", String, "Uses contents of file as the value. `kcu secret set namespace/secret_name entry_name --from-file=/tmp/config.cfg`"
         c.action do |args, options|
-          SetSecretAction.(*args)
+          SetSecretAction.(args, options)
         end
       end
 
