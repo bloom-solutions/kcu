@@ -1,7 +1,8 @@
 require "bundler/setup"
-require "kcu"
 require "fileutils"
+require "kcu"
 require "pathname"
+require "pry-byebug"
 require "timecop"
 
 SPEC_DIR = Pathname.new(File.dirname(__FILE__))
